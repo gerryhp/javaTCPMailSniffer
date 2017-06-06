@@ -9,7 +9,7 @@ public class ProxySocket {
 	
 	private int port;
 		
-	/**+
+	/**
 	 * starts a new proxy socket at port 1234
 	 */
 	public ProxySocket() {

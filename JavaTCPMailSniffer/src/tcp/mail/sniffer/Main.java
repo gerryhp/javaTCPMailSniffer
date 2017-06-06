@@ -6,6 +6,10 @@ public class Main {
 		new ProxySocket();
 	}
 	
+	/**
+	 * Main Class
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		new Main();
 	}

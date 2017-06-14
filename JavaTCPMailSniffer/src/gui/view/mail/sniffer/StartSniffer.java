@@ -1,54 +1,36 @@
-package gui.mail.sniffer;
+package gui.view.mail.sniffer;
 
+import java.io.IOException;
+
+import gui.controller.mail.sniffer.SnifferController;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.ToolBar;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import preferences.mail.sniffer.SnifferPreferences;
 
 public class StartSniffer extends Application {
 
+	private SnifferPreferences prefs = new SnifferPreferences();
+	
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws IOException {
 		primaryStage.setTitle("Java TCP Mail Sniffer");
 		
-		BorderPane root = new BorderPane();
+		//Load Scene
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("startfxml.fxml"));
+		Parent root = (Parent) loader.load();
 		
-		VBox menus = new VBox();
-		
-		menus.getChildren().add(createMenu());
-		menus.getChildren().add(createToolbar());
-		
-		//TODO Start des Programms
-		root.setTop(menus);
-		
-		primaryStage.setScene(new Scene(root, 500, 500));
+		//Controller Settings
+		SnifferController snifferController = (SnifferController) loader.getController();
+		snifferController.setSettings(prefs);
+					
+		//Show Scene
+		primaryStage.setScene(new Scene(root));
 		primaryStage.show();
 	}
 	
-	public MenuBar createMenu() {
-		MenuBar menuBar = new MenuBar();
-		Menu menuFile = new Menu("File");
-		
-		menuBar.getMenus().addAll(menuFile);
-		
-		return menuBar;
-	}
-	
-	public ToolBar createToolbar() {
-		ToolBar toolBar = new ToolBar();
-		
-		//TODO HBox für alle Buttons für event. nachher noch einer Searchleiste
-		Button btnStart = new Button("Start");
-		
-		toolBar.getItems().add(btnStart);
-		
-		return toolBar;
-	}
 
 	public static void main(String[] args) {
 		launch(args);

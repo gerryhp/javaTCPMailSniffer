@@ -13,12 +13,12 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
+                    <MenuItem fx:id="menuItemClose" mnemonicParsing="false" onAction="#quit" text="Close" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
+                    <MenuItem fx:id="menuItemPrefs" mnemonicParsing="false" onAction="#showSettings" text="Preferences" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
@@ -30,7 +30,7 @@
             </MenuBar>
             <ToolBar prefHeight="40.0" prefWidth="200.0">
               <items>
-                <Button mnemonicParsing="false" onAction="#testHallo" text="Button" />
+                <Button fx:id="button" mnemonicParsing="false" onAction="#start" text="Start" />
               </items>
             </ToolBar>
          </children>

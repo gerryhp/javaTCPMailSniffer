@@ -2,9 +2,12 @@ package gui.mail.sniffer;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class StartSniffer extends Application {
@@ -15,9 +18,13 @@ public class StartSniffer extends Application {
 		
 		BorderPane root = new BorderPane();
 		
+		VBox menus = new VBox();
+		
+		menus.getChildren().add(createMenu());
+		menus.getChildren().add(createToolbar());
+		
 		//TODO Start des Programms
-		root.setTop(createMenu());
-	
+		root.setTop(menus);
 		
 		primaryStage.setScene(new Scene(root, 500, 500));
 		primaryStage.show();
@@ -30,6 +37,17 @@ public class StartSniffer extends Application {
 		menuBar.getMenus().addAll(menuFile);
 		
 		return menuBar;
+	}
+	
+	public ToolBar createToolbar() {
+		ToolBar toolBar = new ToolBar();
+		
+		//TODO HBox für alle Buttons für event. nachher noch einer Searchleiste
+		Button btnStart = new Button("Start");
+		
+		toolBar.getItems().add(btnStart);
+		
+		return toolBar;
 	}
 
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package tcp.packet.filter;
+package filter.mail.sniffer;
 
 public class PacketFilter {
 

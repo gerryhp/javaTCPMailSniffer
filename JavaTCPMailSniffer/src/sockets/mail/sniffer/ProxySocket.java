@@ -1,4 +1,4 @@
-package tcp.mail.sniffer;
+package sockets.mail.sniffer;
 
 import java.io.IOException;
 import java.net.ServerSocket;

@@ -29,7 +29,7 @@ public class PacketFilter {
 
 	public void setProtcolSelected(int protcolSelected) {
 		this.protcolSelected = protcolSelected;
-		resetMatches();
+		matches.clear();
 	}
 
 	public String getSearchExpr() {
@@ -38,15 +38,13 @@ public class PacketFilter {
 
 	public void setSearchExpr(String searchExpr) {
 		this.searchExpr = searchExpr;
-		resetMatches();
-	}
-	
-	/**
-	 * Removes all old matches, which is necessary for a new searchExpr  
-	 */
-	private void resetMatches() {
 		matches.clear();
 	}
+	
+	public ArrayList<Session> getMatches() {
+		return matches;
+	}	
+	
 	/**
 	 * This is the filter function for any of the three protocols.
 	 * Session is the most important Class for Email in Java
@@ -54,11 +52,10 @@ public class PacketFilter {
 	 * to create a new Session out of the collected informations.
 	 * This method checks, if any session contains the @param searchExpr. 
 	 */
-	public ArrayList<Session> filter(/*needs to be discussed*/) {
+	public void filter(Session input) {
 		if (searchExpr.equals("")) {
-			return null;
+			return;
 		}
-		// to do ...
-		return matches;
-	}	
+		// to do ...	
+	}
 }

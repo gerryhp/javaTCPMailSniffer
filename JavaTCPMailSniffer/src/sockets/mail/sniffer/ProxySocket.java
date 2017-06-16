@@ -2,44 +2,64 @@ package sockets.mail.sniffer;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.SocketException;
 
-public class ProxySocket {
-	
-	private static final int PORT = 1234;
-	
-	private int port;
+import gui.controller.mail.sniffer.SnifferController;
+
+public class ProxySocket extends Thread {
 		
-	/**
-	 * starts a new proxy socket at port 1234
-	 */
-	public ProxySocket() {
-		this.port = PORT;		
-		startProxy();
-	}
-	
+	private int port;
+	private SnifferController controller;
+	private ServerSocket serverSocket;
+	private boolean running;
+
 	/**
 	 * start a new proxy socket 
 	 * @param port port address of proxy socket
 	 */
-	public ProxySocket(int port) {
+	public ProxySocket(int port, SnifferController controller) {
+		this.setDaemon(true);
 		this.port = port;
-		startProxy();
+		this.controller = controller;
+		this.running = false;
 	}
 	
-	/**
-	 * creates new Proxy Socket / Server Socket
-	 * and waiting for connections
-	 */
-	public void startProxy() {
-		try(ServerSocket serverSocket = new ServerSocket(port)) {
-			System.out.println("Waiting for client connections");
+	
+	@Override
+	public void run() {
+		try {
+			serverSocket = new ServerSocket(port);
 			
-			while (true) {		
-				new ProxyThread(serverSocket.accept()).start();
+			System.out.println("Waiting for client connections");
+			controller.setStatus(true);
+			setRunning(true);
+			
+			while (true) {
+				new ProxyThread(serverSocket.accept(), this).start();
 			}
 			
-		} catch (IOException io) {
-			System.out.println(io);
+		} catch (SocketException ex) {
+			//ServerSocket stops connection
+			System.out.println(ex);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			setRunning(false);
+		}
+	}	
+	
+	public boolean isRunning() {
+		return running;
+	}
+	
+	private void setRunning(boolean running) {
+		controller.setStatus(running);
+		this.running = running;
+	}
+	
+	public void stopProxy() throws IOException {
+		if (serverSocket != null) {
+			serverSocket.close();
 		}
 	}
 

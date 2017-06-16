@@ -9,14 +9,16 @@ public class ProxyThread extends Thread {
 	
 	private Socket socket;
 	private BufferedReader reader; 
+	private ProxySocket proxySocket;
 	
 	/**
 	 * new Thread for a new socket connection
 	 * @param socket
 	 * @throws IOException
 	 */
-	public ProxyThread(Socket socket) throws IOException {
+	public ProxyThread(Socket socket, ProxySocket proxySocket) throws IOException {
 		this.socket = socket;
+		this.proxySocket = proxySocket;		
 		reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 	}
 	

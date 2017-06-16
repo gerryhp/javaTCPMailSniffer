@@ -3,36 +3,64 @@ package gui.controller.mail.sniffer;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import gui.model.mail.sniffer.SnifferModel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import preferences.mail.sniffer.SnifferPreferences;
+import sockets.mail.sniffer.ProxySocket;
 
 public class SnifferController implements Initializable {
 	
+	private ProxySocket socket;
 	private SnifferPreferences pref;
-	private SnifferModel model = new SnifferModel();	
 	@FXML
 	private Button button;
 	@FXML
 	private MenuItem menuItemClose;
 	@FXML
 	private MenuItem menuItemPrefs;
+	@FXML
+	private Label lblStatus;
 	
 	/**
-	 * start to sniff
+	 * starts to sniff
 	 */
-	public void start() {
-		//TODO if running - stop button - otherwise start
-		button.setText(model.getStopButton());
-		System.out.println("Start! Listening on port "+pref.getPort());
-		
-		//TODO neuen Thread starten für das Capturen
+	public void start() {	
+		System.out.println("Starting...");
+		//Starts a new Thread for the proxy socket
+		socket = new ProxySocket(pref.getPort(), this);		
+		socket.start();
+		Platform.runLater(() -> button.setText("Stop"));
 	}
 	
+	public void stop() throws IOException {
+		socket.stopProxy();
+		Platform.runLater(() -> button.setText("Start"));
+	}
+	
+	/**
+	 * starts or stops the proxy socket
+	 * @throws IOException 
+	 */
+	public void startOrStop() throws IOException {
+		if (socket == null || !socket.isRunning()) {
+			start();
+		} else if (socket.isRunning()){
+			stop();
+		}
+	}
+	
+	public void setStatus(boolean running) {
+		if (running) {
+			Platform.runLater(() -> this.lblStatus.setText("Running on Port: "+pref.getPort()));			
+		} else {
+			Platform.runLater(() -> this.lblStatus.setText("Stopped")); 
+		}
+	}
+		
 	/**
 	 * shows the view of settings
 	 * @throws IOException
@@ -52,13 +80,16 @@ public class SnifferController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		button.setText("Start");		
+		button.setText("Start");	
 	}
 
 	/**
 	 * quits the program
 	 */
 	public void quit() {
+		if (socket != null)
+			socket.interrupt();
+		
 		Platform.exit();
 	}
 }

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="407.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.mail.sniffer.SnifferController">
+<BorderPane prefHeight="541.0" prefWidth="668.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.mail.sniffer.SnifferController">
    <top>
       <VBox prefHeight="65.0" prefWidth="490.0" BorderPane.alignment="CENTER">
          <children>
@@ -30,13 +31,34 @@
             </MenuBar>
             <ToolBar prefHeight="40.0" prefWidth="200.0">
               <items>
-                <Button fx:id="button" mnemonicParsing="false" onAction="#start" text="Start" />
+                <Button fx:id="button" mnemonicParsing="false" onAction="#startOrStop" text="Start" />
               </items>
             </ToolBar>
          </children>
       </VBox>
    </top>
+   <bottom>
+      <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="490.0" style="-fx-background-color: lightgrey;" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Status:">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="lblStatus" text="Label">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+         </children>
+      </HBox>
+   </bottom>
    <center>
-      <TabPane prefHeight="289.0" prefWidth="490.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER" />
+      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
    </center>
 </BorderPane>

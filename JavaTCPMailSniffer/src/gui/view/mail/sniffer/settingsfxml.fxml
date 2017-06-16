@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane prefHeight="319.0" prefWidth="403.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<BorderPane prefHeight="319.0" prefWidth="403.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -27,4 +26,11 @@
          </children>
       </HBox>
    </center>
+   <bottom>
+      <HBox alignment="BOTTOM_RIGHT" prefHeight="0.0" prefWidth="403.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Button" />
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>

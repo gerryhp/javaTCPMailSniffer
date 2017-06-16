@@ -28,7 +28,7 @@ public class ProxyThread extends Thread {
 			System.out.println("IP Address: "+socket.getInetAddress());
 			
 			String request = reader.readLine();
-			System.out.println(request);			
+			System.out.println(request);		
 		} catch (IOException e) {
 			e.printStackTrace();
 		}				

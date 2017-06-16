@@ -37,7 +37,7 @@ public class ProxySocket extends Thread {
 			while (true) {
 				new ProxyThread(serverSocket.accept(), this).start();
 			}
-			
+	
 		} catch (SocketException ex) {
 			//ServerSocket stops connection
 			System.out.println(ex);

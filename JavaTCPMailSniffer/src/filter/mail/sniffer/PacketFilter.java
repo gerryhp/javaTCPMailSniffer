@@ -65,52 +65,52 @@ public class PacketFilter {
 	 * @throws MessagingException
 	 * @throws IOException
 	 */
-//	public void filter(Message message, SearchArea search) throws IOException, MessagingException {
-//		if (searchExpr.equals("")) {
-//			return;
-//		}
-//		switch (search) {
-//		case CONTENT:
-//			if (message.getContent().toString().contains(searchExpr)) {
-//				matches.add(message);
-//			}
-//
-//			break;
-//
-//		case FILE_NAME:
-//			if (message.getFileName().contains(searchExpr)) {
-//				matches.add(message);
-//			}
-//			break;
-//
-//		case FROM:
-//			String from = Arrays.toString(message.getFrom());
-//			if (from.contains(searchExpr)) {
-//				matches.add(message);
-//			}
-//			break;
-//
-//		case SENT_DATE:
-//			if (message.getSentDate().toString().contains(searchExpr)) {
-//				matches.add(message);
-//			}
-//			break;
-//
-//		case SUBJECT:
-//			if (message.getSubject().toString().contains(searchExpr)) {
-//				matches.add(message);
-//			}
-//			break;
-//
-//		case TO:
-//			String to = Arrays.toString(message.getReplyTo());
-//			if (to.contains(searchExpr)) {
-//				matches.add(message);
-//			}
-//			break;
-//
-//		default:
-//			break;
-//		}
-//	}
+	public void filter(Message message, SearchArea search) throws IOException, MessagingException {
+		if (searchExpr.equals("")) {
+			return;
+		}
+		switch (search) {
+		case CONTENT:
+			if (message.getContent().toString().contains(searchExpr)) {
+				matches.add(message);
+			}
+
+			break;
+
+		case FILE_NAME:
+			if (message.getFileName().contains(searchExpr)) {
+				matches.add(message);
+			}
+			break;
+
+		case FROM:
+			String from = Arrays.toString(message.getFrom());
+			if (from.contains(searchExpr)) {
+				matches.add(message);
+			}
+			break;
+
+		case SENT_DATE:
+			if (message.getSentDate().toString().contains(searchExpr)) {
+				matches.add(message);
+			}
+			break;
+
+		case SUBJECT:
+			if (message.getSubject().toString().contains(searchExpr)) {
+				matches.add(message);
+			}
+			break;
+
+		case TO:
+			String to = Arrays.toString(message.getReplyTo());
+			if (to.contains(searchExpr)) {
+				matches.add(message);
+			}
+			break;
+
+		default:
+			break;
+		}
+	}
 }

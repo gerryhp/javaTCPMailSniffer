@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import preferences.mail.sniffer.SnifferPreferences;
+import sockets.mail.sniffer.NetworkInterfaces;
 import sockets.mail.sniffer.ProxySocket;
 
 public class SnifferController implements Initializable {
@@ -51,11 +52,13 @@ public class SnifferController implements Initializable {
 	 * @throws IOException 
 	 */
 	public void startOrStop() throws IOException {
-		if (socket == null || !socket.isRunning()) {
-			start();
-		} else if (socket.isRunning()){
-			stop();
-		}
+//		if (socket == null || !socket.isRunning()) {
+//			start();
+//		} else if (socket.isRunning()){
+//			stop();
+//		}
+		NetworkInterfaces networkInt = new NetworkInterfaces();
+		networkInt.getDevices();
 	}
 	
 	/**

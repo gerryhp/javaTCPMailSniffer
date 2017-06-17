@@ -35,7 +35,7 @@ public class NetworkInterfaces {
 			
 			@Override
 			public void run() {
-				Pcap pcap = Pcap.openLive(alldevs.get(2).getName(), snaplen, flags, timeout, errbuf);
+				Pcap pcap = Pcap.openLive(alldevs.get(3).getName(), snaplen, flags, timeout, errbuf);
 				
 				if (pcap == null) {
 					System.err.println("Error");

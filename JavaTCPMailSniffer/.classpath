@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="E:/Downloads/javax.mail.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Gerry/Desktop/jnetpcap.jar"/>
+	<classpathentry kind="lib" path="/home/studi/git/javaTCPMailSniffer/JavaTCPMailSniffer/jnetpcap/jnetpcap.jar"/>
+	<classpathentry kind="lib" path="/home/studi/git/javaTCPMailSniffer/JavaTCPMailSniffer/javax_mail/javax.mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

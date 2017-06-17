@@ -1,6 +1,7 @@
 package gui.controller.mail.sniffer;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -26,7 +27,7 @@ public class SnifferController implements Initializable {
 	private Label lblStatus;
 	
 	/**
-	 * starts to sniff
+	 * start a new server socket
 	 */
 	public void start() {	
 		System.out.println("Starting...");
@@ -36,6 +37,10 @@ public class SnifferController implements Initializable {
 		Platform.runLater(() -> button.setText("Stop"));
 	}
 	
+	/**
+	 * stops the server socket
+	 * @throws IOException
+	 */
 	public void stop() throws IOException {
 		socket.stopProxy();
 		Platform.runLater(() -> button.setText("Start"));
@@ -53,6 +58,10 @@ public class SnifferController implements Initializable {
 		}
 	}
 	
+	/**
+	 * Setting Status to view
+	 * @param running
+	 */
 	public void setStatus(boolean running) {
 		if (running) {
 			Platform.runLater(() -> this.lblStatus.setText("Running on Port: "+pref.getPort()));			
@@ -60,7 +69,15 @@ public class SnifferController implements Initializable {
 			Platform.runLater(() -> this.lblStatus.setText("Stopped")); 
 		}
 	}
-		
+	
+	/**
+	 * if new client is connected, print on view
+	 * @param socket
+	 */
+	public void newClient(Socket socket) {		
+		Platform.runLater(() -> this.lblStatus.setText(lblStatus.getText()+" Client: "+socket.getLocalAddress().toString()));
+	}
+			
 	/**
 	 * shows the view of settings
 	 * @throws IOException
@@ -78,6 +95,9 @@ public class SnifferController implements Initializable {
 		this.pref = pref;
 	}
 	
+	/**
+	 * Init the view
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		button.setText("Start");	

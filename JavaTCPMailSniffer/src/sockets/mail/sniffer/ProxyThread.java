@@ -1,9 +1,12 @@
 package sockets.mail.sniffer;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
+
 
 public class ProxyThread extends Thread {
 	
@@ -20,17 +23,29 @@ public class ProxyThread extends Thread {
 		this.socket = socket;
 		this.proxySocket = proxySocket;		
 		reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		System.out.println(socket);
 	}
 	
 	@Override
 	public void run() {
 		try {		
-			System.out.println("IP Address: "+socket.getInetAddress());
+				
+			proxySocket.setClient(socket);
+			int req;
 			
-			String request = reader.readLine();
-			System.out.println(request);		
+			StringBuilder sb = new StringBuilder();
+			
+			while ((req = reader.read()) != -1) {
+				System.out.println(req);
+				sb.append((char) req);					
+				String result = sb.toString();
+				System.out.println(result);				
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
-		}				
+		} finally {
+			proxySocket.connectionClosed(socket);
+		}
 	}
 }

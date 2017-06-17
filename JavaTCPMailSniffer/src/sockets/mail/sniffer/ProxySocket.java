@@ -1,8 +1,13 @@
 package sockets.mail.sniffer;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 
 import gui.controller.mail.sniffer.SnifferController;
 
@@ -12,7 +17,8 @@ public class ProxySocket extends Thread {
 	private SnifferController controller;
 	private ServerSocket serverSocket;
 	private boolean running;
-
+	private ArrayList<Socket> clients;
+	
 	/**
 	 * start a new proxy socket 
 	 * @param port port address of proxy socket
@@ -22,6 +28,7 @@ public class ProxySocket extends Thread {
 		this.port = port;
 		this.controller = controller;
 		this.running = false;
+		this.clients = new ArrayList<>(); 
 	}
 	
 	
@@ -35,6 +42,9 @@ public class ProxySocket extends Thread {
 			setRunning(true);
 			
 			while (true) {
+//				BufferedReader re = new BufferedReader(new InputStreamReader(serverSocket.accept().getInputStream()));
+//				System.out.println(re.read());
+				
 				new ProxyThread(serverSocket.accept(), this).start();
 			}
 	
@@ -61,6 +71,15 @@ public class ProxySocket extends Thread {
 		if (serverSocket != null) {
 			serverSocket.close();
 		}
+	}
+	
+	public synchronized void setClient(Socket client) {
+		controller.newClient(client);
+		clients.add(client);		
+	}
+	
+	public synchronized void connectionClosed(Socket client) {
+		clients.remove(client);
 	}
 
 }

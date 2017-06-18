@@ -10,9 +10,9 @@ import javafx.stage.Stage;
 import preferences.mail.sniffer.SnifferPreferences;
 
 public class SettingsView extends Stage {
-		
+
 	public SettingsView(SnifferPreferences prefs) throws IOException {
-		
+
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("settingsfxml.fxml"));
 		Parent root = loader.load();
 
@@ -20,8 +20,9 @@ public class SettingsView extends Stage {
 		SettingsController settingsController = (SettingsController) loader.getController();
 		//add Settings to view
 		settingsController.setSettings(prefs);
-		
-		this.setScene(new Scene(root));		
+
+		//test
+		this.setScene(new Scene(root));
 		this.setTitle("Settings");
 	}
 }

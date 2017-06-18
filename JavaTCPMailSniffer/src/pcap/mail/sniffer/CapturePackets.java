@@ -34,14 +34,11 @@ public class CapturePackets {
 					
 					@Override
 					public void nextPacket(PcapPacket packet, String user) {
-//						System.out.println(packet.size());	
-//						System.out.println(packet.getCaptureHeader().getStructName());
 						TextFormatter text = new TextFormatter(System.out);
 					
 						try {
 							text.format(packet);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 									
@@ -49,6 +46,9 @@ public class CapturePackets {
 					
 				};
 							
+				/*
+				 * captures every packet
+				 */
 				pcap.loop(-1, jpacketHandler, "jNetPcap");					
 				pcap.close();
 			}

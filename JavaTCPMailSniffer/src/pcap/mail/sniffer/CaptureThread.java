@@ -21,7 +21,8 @@ public class CaptureThread extends Thread {
 		if (pcap == null) {
 			System.err.println("Error");
 		}
-						
+				
+		//What to do with sniffed packets - @param true: shows in console
 		Packets packets = new Packets(true);
 		
 		/*

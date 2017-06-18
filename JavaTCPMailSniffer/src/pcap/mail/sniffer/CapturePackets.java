@@ -61,9 +61,12 @@ public class CapturePackets {
 				packet.getUTF8String(0, str, packet.getTotalSize());
 				String payload = str.toString();
 				
-				if (payload.contains(controller.getFilterText())){
+				if (controller.getFilterText().isEmpty()) {
 					controller.insertIntoTable(new PacketCaptured("TCP", s1, s, payload));					
+				} else if (payload.contains(controller.getFilterText())) {
+					controller.insertIntoTable(new PacketCaptured("TCP", s1, s, payload));
 				}
+				
 			}
 		}
 		

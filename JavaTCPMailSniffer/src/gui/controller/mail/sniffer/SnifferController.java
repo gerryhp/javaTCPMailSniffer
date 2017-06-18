@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import pcap.mail.sniffer.CapturePackets;
 import pcap.mail.sniffer.PacketCaptured;
@@ -41,6 +42,10 @@ public class SnifferController implements Initializable {
 	private TableColumn<PacketCaptured, String> tcFrom;
 	@FXML
 	private TableColumn<PacketCaptured, String> tcTo;
+	@FXML
+	private TableColumn<PacketCaptured, String> tcPayload;
+	@FXML
+	private TextField txtFilter;
 	
 	/**
 	 * start a new server socket
@@ -120,6 +125,10 @@ public class SnifferController implements Initializable {
 		pcapList.add(packetCaptured);		
 	}
 	
+	public String getFilterText() {
+		return txtFilter.getText();
+	}
+	
 	/**
 	 * Init the view
 	 */
@@ -133,6 +142,7 @@ public class SnifferController implements Initializable {
 		tcProtocol.setCellValueFactory(new PropertyValueFactory<PacketCaptured, String>("protocol"));
 		tcFrom.setCellValueFactory(new PropertyValueFactory<PacketCaptured, String>("from"));
 		tcTo.setCellValueFactory(new PropertyValueFactory<PacketCaptured, String>("to"));
+		tcPayload.setCellValueFactory(new PropertyValueFactory<PacketCaptured, String>("payload"));
 		
 		tblPackets.setItems(pcapList);
 	}

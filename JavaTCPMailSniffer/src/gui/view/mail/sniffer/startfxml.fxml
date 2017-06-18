@@ -32,6 +32,8 @@
             <ToolBar prefHeight="40.0" prefWidth="200.0">
               <items>
                 <Button fx:id="button" mnemonicParsing="false" onAction="#startOrStop" text="Start" />
+                  <Label text="Filter:" />
+                  <TextField fx:id="txtFilter" prefHeight="25.0" prefWidth="272.0" />
               </items>
             </ToolBar>
          </children>
@@ -57,8 +59,9 @@
       <TableView fx:id="tblPackets" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <columns>
             <TableColumn fx:id="tcProtocol" prefWidth="75.0" text="Protocol" />
-            <TableColumn fx:id="tcFrom" prefWidth="75.0" text="From" />
-            <TableColumn fx:id="tcTo" prefWidth="75.0" text="To" />
+            <TableColumn fx:id="tcFrom" prefWidth="136.0" text="From" />
+            <TableColumn fx:id="tcTo" prefWidth="139.0" text="To" />
+            <TableColumn fx:id="tcPayload" prefWidth="317.0" text="Payload" />
          </columns>
       </TableView>
    </center>

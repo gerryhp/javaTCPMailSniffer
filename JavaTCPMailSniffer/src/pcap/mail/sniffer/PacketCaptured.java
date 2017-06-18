@@ -4,11 +4,13 @@ public class PacketCaptured {
 	private String protocol;
 	private String from;
 	private String to;
-	
-	public PacketCaptured(String protocol, String from, String to) {
+	private String payload;
+		
+	public PacketCaptured(String protocol, String from, String to, String payload) {
 		this.protocol = protocol;
 		this.from = from;
 		this.to = to;
+		this.payload = payload;
 	}
 
 	public String getProtocol() {
@@ -33,6 +35,14 @@ public class PacketCaptured {
 
 	public void setTo(String to) {
 		this.to = to;
+	}
+
+	public String getPayload() {
+		return payload;
+	}
+
+	public void setPayload(String payload) {
+		this.payload = payload;
 	}	
 	
 }

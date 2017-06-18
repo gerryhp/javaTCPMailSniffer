@@ -1,41 +1,28 @@
 package pcap.mail.sniffer;
 
-import java.util.ArrayList;
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
 
 public class CapturePackets {
 	
-	private static final int SNAPLEN = 64*1024; //capture all packets, no trucation
+	public static final int SNAPLEN = 64*1024; //capture all packets, no trucation
+	public static final int FLAGS = Pcap.MODE_PROMISCUOUS; //capture all packets
+	public static final int TIMEOUT = 10*1000; //timeout in milli
 	
-	public void capture(PcapIf pcapIf) {
-		
-		int snaplen = 64*1024; //capture all packets, no trucation
-		int flags = Pcap.MODE_PROMISCUOUS; //capture all packets;
-		int timeout = 10 * 1000; //timeout in milli
-		
-		StringBuilder errbuf = new StringBuilder();
-		
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				Pcap pcap = Pcap.openLive(pcapIf.getName(), snaplen, flags, timeout, errbuf);
-				
-				if (pcap == null) {
-					System.err.println("Error");
-				}
-								
-				Packets packets = new Packets(true);
-				
-				/*
-				 * captures every packet
-				 */
-				pcap.loop(-1, packets, "jNetPcap");					
-				pcap.close();
+	private CaptureThread thread;
+	
+	public void capture(PcapIf pcapIf) {					
+		thread = new CaptureThread(pcapIf);
+		thread.start();
+	}
+	
+	public void stopCapture() {		
+		if (thread != null) {
+			if (!thread.isInterrupted()) {
+				thread.interrupt();
+				thread.stopLoop();
 			}
-		}).start();
-		
+		}
 	}
 
 }

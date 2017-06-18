@@ -2,10 +2,10 @@ package pcap.mail.sniffer;
 
 public class PacketCaptured {
 	private String protocol;
-	private int from;
-	private int to;
+	private String from;
+	private String to;
 	
-	public PacketCaptured(String protocol, int from, int to) {
+	public PacketCaptured(String protocol, String from, String to) {
 		this.protocol = protocol;
 		this.from = from;
 		this.to = to;
@@ -19,19 +19,19 @@ public class PacketCaptured {
 		this.protocol = protocol;
 	}
 
-	public int getFrom() {
+	public String getFrom() {
 		return from;
 	}
 
-	public void setFrom(int from) {
+	public void setFrom(String from) {
 		this.from = from;
 	}
 
-	public int getTo() {
+	public String getTo() {
 		return to;
 	}
 
-	public void setTo(int to) {
+	public void setTo(String to) {
 		this.to = to;
 	}	
 	

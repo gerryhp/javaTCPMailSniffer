@@ -5,6 +5,7 @@ import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.format.FormatUtils;
 import org.jnetpcap.protocol.network.Ip4;
+import org.jnetpcap.protocol.tcpip.Tcp;
 
 import gui.controller.mail.sniffer.SnifferController;
 
@@ -51,11 +52,24 @@ public class CapturePackets {
 		if (packet.hasHeader(ip)) {
 			dIP = packet.getHeader(ip).destination();
 			sIP = packet.getHeader(ip).source();
+			
+			String s = FormatUtils.ip(dIP);
+			String s1 = FormatUtils.ip(sIP);
+			
+			if (packet.hasHeader(new Tcp())) {
+				StringBuilder str = new StringBuilder();
+				packet.getUTF8String(0, str, packet.getTotalSize());
+				String payload = str.toString();
+				
+				if (controller.getFilterText().isEmpty()) {
+					controller.insertIntoTable(new PacketCaptured("TCP", s1, s, payload));					
+				} else if (payload.contains(controller.getFilterText())) {
+					controller.insertIntoTable(new PacketCaptured("TCP", s1, s, payload));
+				}
+				
+			}
 		}
 		
-		String s = FormatUtils.ip(dIP);
-		String s1 = FormatUtils.ip(sIP);
 		
-		controller.insertIntoTable(new PacketCaptured("TCP", s1, s));
 	}
 }

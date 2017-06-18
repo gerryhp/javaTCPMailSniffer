@@ -71,7 +71,7 @@ public class CaptureThread extends Thread {
 	private boolean applyFilter() {
 		PcapBpfProgram filter = new PcapBpfProgram();
 		
-		String expression = "tcp port 995";
+		String expression = "tcp port 995 or tcp port 110";
 		
 		int optimize = 0; //0 = false
 		int netmask = 0xFFFFFF00; //255.255.255.0

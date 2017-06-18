@@ -1,6 +1,7 @@
 package gui.view.mail.sniffer;
 
 import java.io.IOException;
+
 import gui.controller.mail.sniffer.SnifferController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,8 +21,8 @@ public class StartSniffer extends Application {
 		//Load Scene
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("startfxml.fxml"));
 		Parent root = (Parent) loader.load();
-		
-		//Controller Settings
+			
+		//Sniffer Controller
 		SnifferController snifferController = (SnifferController) loader.getController();
 		snifferController.setSettings(prefs);
 		

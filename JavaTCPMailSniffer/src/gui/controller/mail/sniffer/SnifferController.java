@@ -1,9 +1,10 @@
 package gui.controller.mail.sniffer;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import gui.view.mail.sniffer.SettingsView;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,14 +12,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import pcap.mail.sniffer.CapturePackets;
-import pcap.mail.sniffer.NetworkInterfaces;
 import preferences.mail.sniffer.SnifferPreferences;
-import sockets.mail.sniffer.ProxySocket;
 
 public class SnifferController implements Initializable {
 	
-	private ProxySocket socket;
 	private SnifferPreferences pref;
+	private SettingsView settingsView;
 	@FXML
 	private Button button;
 	@FXML
@@ -33,9 +32,6 @@ public class SnifferController implements Initializable {
 	 */
 	public void start() {	
 		System.out.println("Starting...");
-		//Starts a new Thread for the proxy socket
-		socket = new ProxySocket(pref.getPort(), this);		
-		socket.start();
 		Platform.runLater(() -> button.setText("Stop"));
 	}
 	
@@ -44,7 +40,6 @@ public class SnifferController implements Initializable {
 	 * @throws IOException
 	 */
 	public void stop() throws IOException {
-		socket.stopProxy();
 		Platform.runLater(() -> button.setText("Start"));
 	}
 	
@@ -53,14 +48,8 @@ public class SnifferController implements Initializable {
 	 * @throws IOException 
 	 */
 	public void startOrStop() throws IOException {
-//		if (socket == null || !socket.isRunning()) {
-//			start();
-//		} else if (socket.isRunning()){
-//			stop();
-//		}
-//		NetworkInterfaces networkInt = new NetworkInterfaces();
-//		networkInt.getDevices();
-		new CapturePackets().capture();
+		//TODO Thread am laufen dann stoppen und andersrum
+		new CapturePackets().capture(pref.getCurrentIf());
 	}
 	
 	/**
@@ -68,28 +57,18 @@ public class SnifferController implements Initializable {
 	 * @param running
 	 */
 	public void setStatus(boolean running) {
-		if (running) {
-			Platform.runLater(() -> this.lblStatus.setText("Running on Port: "+pref.getPort()));			
-		} else {
-			Platform.runLater(() -> this.lblStatus.setText("Stopped")); 
-		}
+		
 	}
 	
-	/**
-	 * if new client is connected, print on view
-	 * @param socket
-	 */
-	public void newClient(Socket socket) {		
-		Platform.runLater(() -> this.lblStatus.setText(lblStatus.getText()+" Client: "+socket.getLocalAddress().toString()));
-	}
 			
 	/**
 	 * shows the view of settings
 	 * @throws IOException
 	 */
-	public void showSettings() throws IOException {
-		if (!pref.isSettingsOpen())
-			this.pref.showSettings();
+	public void showSettings() throws IOException {	
+		if (!settingsView.isShowing()) {
+			settingsView.show();
+		}
 	}
 
 	/**
@@ -98,6 +77,14 @@ public class SnifferController implements Initializable {
 	 */
 	public void setSettings(SnifferPreferences pref) {
 		this.pref = pref;
+		
+		//For the Settings view
+		try {
+			this.settingsView = new SettingsView(this.pref);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -105,16 +92,13 @@ public class SnifferController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		button.setText("Start");	
+		button.setText("Start");
 	}
 
 	/**
 	 * quits the program
 	 */
-	public void quit() {
-		if (socket != null)
-			socket.interrupt();
-		
+	public void quit() {	
 		Platform.exit();
 	}
 }

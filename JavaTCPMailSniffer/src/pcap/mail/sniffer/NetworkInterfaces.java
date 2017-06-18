@@ -6,22 +6,39 @@ import org.jnetpcap.PcapIf;
 
 public class NetworkInterfaces {
 	
-	public ArrayList<PcapIf> getDevices() {
-		ArrayList<PcapIf> alldevs = new ArrayList<>();
-		StringBuilder errbuf = new StringBuilder();
-		
-		int statusCode = Pcap.findAllDevs(alldevs, errbuf);
-		
-		if (statusCode != Pcap.OK) {
+	private ArrayList<PcapIf> alldevs = new ArrayList<>();
+	private StringBuilder errbuf = new StringBuilder();
+	
+	public NetworkInterfaces() {
+		if (findDevices() != Pcap.OK) {
 			System.out.println("Error occured: "+errbuf.toString());
-			return null;
+			return;
 		}
+	}
+	
+	private int findDevices() {		
+		int statusCode = Pcap.findAllDevs(alldevs, errbuf);		
 		
 		for (PcapIf device: alldevs) {
 			System.out.println(device.getName());
 			System.out.println(device.getDescription());
-		}	
+		}
 		
-		return alldevs;		
+		return statusCode;
 	}
+	
+	public ArrayList<PcapIf> getDevices() {
+		return new ArrayList<>(alldevs);		
+	}
+	
+	public ArrayList<String> getDeviceNames() {
+		ArrayList<String> deviceNames = new ArrayList<>();
+		
+		for (PcapIf device: alldevs) {
+			deviceNames.add(device.getDescription());
+		}
+		
+		return deviceNames;
+	}
+	
 }

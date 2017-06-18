@@ -38,9 +38,9 @@ public class SnifferController implements Initializable {
 	@FXML
 	private TableColumn<PacketCaptured, String> tcProtocol;
 	@FXML
-	private TableColumn<PacketCaptured, Integer> tcFrom;
+	private TableColumn<PacketCaptured, String> tcFrom;
 	@FXML
-	private TableColumn<PacketCaptured, Integer> tcTo;
+	private TableColumn<PacketCaptured, String> tcTo;
 	
 	/**
 	 * start a new server socket
@@ -131,8 +131,8 @@ public class SnifferController implements Initializable {
 		tblPackets.setEditable(false);		
 		
 		tcProtocol.setCellValueFactory(new PropertyValueFactory<PacketCaptured, String>("protocol"));
-		tcFrom.setCellValueFactory(new PropertyValueFactory<PacketCaptured, Integer>("from"));
-		tcTo.setCellValueFactory(new PropertyValueFactory<PacketCaptured, Integer>("to"));
+		tcFrom.setCellValueFactory(new PropertyValueFactory<PacketCaptured, String>("from"));
+		tcTo.setCellValueFactory(new PropertyValueFactory<PacketCaptured, String>("to"));
 		
 		tblPackets.setItems(pcapList);
 	}

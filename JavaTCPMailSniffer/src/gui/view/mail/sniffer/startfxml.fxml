@@ -45,7 +45,7 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="lblStatus" text="not started yet">
+            <Label fx:id="lblStatus" text="not started">
                <padding>
                   <Insets left="10.0" />
                </padding>

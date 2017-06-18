@@ -19,6 +19,9 @@ public class CaptureThread extends Thread {
 		this.setDaemon(true);
 	}
 	
+	/**
+	 * Starts the Thread to sniff
+	 */
 	public void run() {
 		capture = true;
 		capturePackets.currentStatus(true);
@@ -31,9 +34,10 @@ public class CaptureThread extends Thread {
 		}
 		
 		applyFilter();
+		
 				
 		//What to do with sniffed packets - @param true: shows in console
-		Packets packets = new Packets(true, capturePackets);
+		Packets packets = new Packets(false, capturePackets);
 		
 		/*
 		 * captures every packet in a loop
@@ -52,13 +56,19 @@ public class CaptureThread extends Thread {
 		pcap.breakloop();
 	}
 	
+	/**
+	 * status if the sniffer is capturing packets
+	 * @return
+	 */
 	public synchronized boolean isCapturing() {
 		return capture;
 	}
 	
-	
+	/**
+	 * apply a filter to the sniffed packets
+	 * @return
+	 */
 	private boolean applyFilter() {
-		//TODO SETTINGS showing which protocol to filter
 		PcapBpfProgram filter = new PcapBpfProgram();
 		
 		String expression = "tcp port 995";
@@ -69,6 +79,8 @@ public class CaptureThread extends Thread {
 		if (pcap.compile(filter, expression, optimize, netmask) != Pcap.OK) {
 			return false;
 		}
+		
+		pcap.setFilter(filter);
 		
 		return true;
 	}

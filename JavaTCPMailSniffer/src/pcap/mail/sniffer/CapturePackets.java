@@ -3,6 +3,8 @@ package pcap.mail.sniffer;
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.PcapPacket;
+import org.jnetpcap.packet.format.FormatUtils;
+import org.jnetpcap.protocol.network.Ip4;
 
 import gui.controller.mail.sniffer.SnifferController;
 
@@ -42,8 +44,18 @@ public class CapturePackets {
 	}
 	
 	public void packetRec(PcapPacket packet) {
-		//TODO einzelne packet abfangen stream einbeziehn und ab dafür
+		Ip4 ip = new Ip4();
+		byte[] dIP = new byte[4];
+		byte[] sIP = new byte[4];
 		
-		controller.insertIntoTable(new PacketCaptured("test", 1, 2));
+		if (packet.hasHeader(ip)) {
+			dIP = packet.getHeader(ip).destination();
+			sIP = packet.getHeader(ip).source();
+		}
+		
+		String s = FormatUtils.ip(dIP);
+		String s1 = FormatUtils.ip(sIP);
+		
+		controller.insertIntoTable(new PacketCaptured("TCP", s1, s));
 	}
 }

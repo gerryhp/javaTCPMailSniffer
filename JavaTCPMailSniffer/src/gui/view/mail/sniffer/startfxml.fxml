@@ -45,7 +45,7 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="lblStatus" text="Label">
+            <Label fx:id="lblStatus" text="not started yet">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -54,11 +54,12 @@
       </HBox>
    </bottom>
    <center>
-      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-        </columns>
+      <TableView fx:id="tblPackets" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <columns>
+            <TableColumn fx:id="tcProtocol" prefWidth="75.0" text="Protocol" />
+            <TableColumn fx:id="tcFrom" prefWidth="75.0" text="From" />
+            <TableColumn fx:id="tcTo" prefWidth="75.0" text="To" />
+         </columns>
       </TableView>
    </center>
 </BorderPane>

@@ -2,9 +2,9 @@
 
 Vorraussetzung:
 ---------------------------
-WinPcap Installation
-jNetPcap Ordner
-Java
+- WinPcap Installation
+- jNetPcap Ordner
+- Java
 
 
 Zum Starten der jar:

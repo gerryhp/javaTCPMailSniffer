@@ -16,7 +16,7 @@ public class CapturePackets {
 		
 		StringBuilder errbuf = new StringBuilder();
 		
-		new Thread(new Runnable() {
+		Thread t = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
@@ -34,7 +34,9 @@ public class CapturePackets {
 				pcap.loop(-1, packets, "jNetPcap");					
 				pcap.close();
 			}
-		}).start();
+		});
+		t.setDaemon(true);
+		t.start();
 		
 	}
 

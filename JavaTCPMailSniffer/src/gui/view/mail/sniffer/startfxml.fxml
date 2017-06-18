@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="541.0" prefWidth="668.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.mail.sniffer.SnifferController">
+   <top>
+      <VBox prefHeight="65.0" prefWidth="490.0" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem fx:id="menuItemClose" mnemonicParsing="false" onAction="#quit" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem fx:id="menuItemPrefs" mnemonicParsing="false" onAction="#showSettings" text="Preferences" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <ToolBar prefHeight="40.0" prefWidth="200.0">
+              <items>
+                <Button fx:id="button" mnemonicParsing="false" onAction="#startOrStop" text="Start" />
+                  <Label text="Filter:" />
+                  <TextField fx:id="txtFilter" prefHeight="25.0" prefWidth="272.0" />
+              </items>
+            </ToolBar>
+         </children>
+      </VBox>
+   </top>
+   <bottom>
+      <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="490.0" style="-fx-background-color: lightgrey;" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Status:">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="lblStatus" text="not started">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <TableView fx:id="tblPackets" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <columns>
+            <TableColumn fx:id="tcProtocol" prefWidth="75.0" text="Protocol" />
+            <TableColumn fx:id="tcFrom" prefWidth="136.0" text="From" />
+            <TableColumn fx:id="tcTo" prefWidth="139.0" text="To" />
+            <TableColumn fx:id="tcPayload" prefWidth="317.0" text="Payload" />
+         </columns>
+      </TableView>
+   </center>
+</BorderPane>

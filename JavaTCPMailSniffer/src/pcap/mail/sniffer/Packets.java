@@ -11,14 +11,17 @@ public class Packets implements PcapPacketHandler<String> {
 	private ArrayList<PcapPacket> list = new ArrayList<>();
 	private TextFormatter textformatter = new TextFormatter(System.out);
 	private boolean showConsole;
+	private CapturePackets capturePackets;
 	
-	public Packets(boolean showConsole) {
+	public Packets(boolean showConsole, CapturePackets capturePackets) {
 		this.showConsole = showConsole;
+		this.capturePackets = capturePackets;
 	}
 
 	@Override
 	public void nextPacket(PcapPacket packet, String user) {
 		this.appendPacket(packet);
+		capturePackets.packetRec(packet);
 	}
 	
 	private void showInConsole(PcapPacket packet) {
@@ -30,7 +33,7 @@ public class Packets implements PcapPacketHandler<String> {
 		}		
 	}
 	
-	private synchronized void appendPacket(PcapPacket packet) {
+	private void appendPacket(PcapPacket packet) {
 		this.list.add(packet);
 		
 		if (showConsole) {
@@ -38,7 +41,7 @@ public class Packets implements PcapPacketHandler<String> {
 		}
 	}
 	
-	public synchronized ArrayList<PcapPacket> getPackets() {
+	public ArrayList<PcapPacket> getPackets() {
 		return new ArrayList<>(list);
 	}
 	

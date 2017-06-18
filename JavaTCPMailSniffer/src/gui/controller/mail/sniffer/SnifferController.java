@@ -10,6 +10,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import pcap.mail.sniffer.CapturePackets;
+import pcap.mail.sniffer.NetworkInterfaces;
 import preferences.mail.sniffer.SnifferPreferences;
 import sockets.mail.sniffer.ProxySocket;
 
@@ -51,11 +53,14 @@ public class SnifferController implements Initializable {
 	 * @throws IOException 
 	 */
 	public void startOrStop() throws IOException {
-		if (socket == null || !socket.isRunning()) {
-			start();
-		} else if (socket.isRunning()){
-			stop();
-		}
+//		if (socket == null || !socket.isRunning()) {
+//			start();
+//		} else if (socket.isRunning()){
+//			stop();
+//		}
+//		NetworkInterfaces networkInt = new NetworkInterfaces();
+//		networkInt.getDevices();
+		new CapturePackets().capture();
 	}
 	
 	/**

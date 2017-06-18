@@ -1,58 +1,41 @@
 package pcap.mail.sniffer;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
-import org.jnetpcap.packet.PcapPacket;
-import org.jnetpcap.packet.PcapPacketHandler;
-import org.jnetpcap.packet.format.TextFormatter;
 
 public class CapturePackets {
 	
-	public void capture() {
+	private static final int SNAPLEN = 64*1024; //capture all packets, no trucation
+	
+	public void capture(PcapIf pcapIf) {
+		
 		int snaplen = 64*1024; //capture all packets, no trucation
 		int flags = Pcap.MODE_PROMISCUOUS; //capture all packets;
-		int timeout = 10 * 1000;
+		int timeout = 10 * 1000; //timeout in milli
 		
-		ArrayList<PcapIf> alldevs = new NetworkInterfaces().getDevices();
 		StringBuilder errbuf = new StringBuilder();
 		
 		new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
-				Pcap pcap = Pcap.openLive(alldevs.get(2).getName(), snaplen, flags, timeout, errbuf);
+				Pcap pcap = Pcap.openLive(pcapIf.getName(), snaplen, flags, timeout, errbuf);
 				
 				if (pcap == null) {
 					System.err.println("Error");
 				}
 								
-
-				PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {
-					
-					@Override
-					public void nextPacket(PcapPacket packet, String user) {
-						TextFormatter text = new TextFormatter(System.out);
-					
-						try {
-							text.format(packet);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-									
-					}
-					
-				};
-							
+				Packets packets = new Packets(true);
+				
 				/*
 				 * captures every packet
 				 */
-				pcap.loop(-1, jpacketHandler, "jNetPcap");					
+				pcap.loop(-1, packets, "jNetPcap");					
 				pcap.close();
 			}
 		}).start();
+		
 	}
 
 }

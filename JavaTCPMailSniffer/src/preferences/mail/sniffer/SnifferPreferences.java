@@ -1,45 +1,38 @@
 package preferences.mail.sniffer;
 
-import java.io.IOException;
+import org.jnetpcap.PcapIf;
 
-import gui.view.mail.sniffer.SettingsView;
+import pcap.mail.sniffer.NetworkInterfaces;
 
 /**
- * Default Preferences 
+ * Default Preferences for the sniffer
  * 
  * @author Gerry
  *
  */
 public class SnifferPreferences {
-	
-	public static final int DEFAULT_PORT = 8081;
-	
-	private int port;
-	private SettingsView view;
+
+	private NetworkInterfaces networkIf;
+	private PcapIf currentIf;
 	
 	public SnifferPreferences() {
-		this.port = DEFAULT_PORT;
-		try {
-			this.view = new SettingsView();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		initDevices();
 	}
 	
-	public int getPort() {
-		return port;
+	private void initDevices() {
+		networkIf = new NetworkInterfaces();
+		setCurrentIf(networkIf.getDevices().get(0));
+	}
+				
+	public NetworkInterfaces getNetworkInterfaces() {
+		return this.networkIf;
 	}
 	
-	public void setPort(int port) {
-		this.port = port;
+	public void setCurrentIf(PcapIf currentIf) {
+		this.currentIf = currentIf;
 	}
 	
-	public void showSettings() {
-		this.view.show();
-	}
-	
-	public boolean isSettingsOpen() {
-		return this.view.isShowing();
+	public PcapIf getCurrentIf() {
+		return this.currentIf;
 	}
 }
